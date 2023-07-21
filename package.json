@@ -1,0 +1,7 @@
+{
+  "devDependencies": {
+    "serverless": "^3.33.0",
+    "serverless-plugin-resource-tagging": "^1.2.0",
+    "serverless-s3-cleaner": "^2.0.2"
+  }
+}

@@ -1,0 +1,81 @@
+service: awsdevops-serverless-fundamentals
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: python3.8
+  region: ${opt:region, 'us-east-1'}
+  environment:
+    BUCKET_NAME: awsdevops-serverless-fundamentals
+    SQS_QUEUE_NAME: awsdevops-serverless-fundamentals
+    SQS_QUEUE_URL:
+      Fn::Sub: "https://sqs.${AWS::Region}.amazonaws.com/${AWS::AccountId}/awsdevops-serverless-fundamentals"
+  stackTags:
+    Project: awsdevops-serverless-fundamentals
+
+  # Adds additional required permissions to the lambda role to be merged into the generated policy
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - sqs:SendMessage
+          Resource:
+            Fn::GetAtt:
+              - SQSQueue
+              - Arn
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+          Resource:
+            Fn::Join:
+              - ""
+              - - "arn:aws:s3:::"
+                - ${self:provider.environment.BUCKET_NAME}
+                - "/*"
+
+functions:
+  lambda1:
+    handler: handler.lambda1
+    events:
+      - http:
+          path: trigger
+          method: post
+          cors: true
+  lambda2:
+    handler: handler.lambda2
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - SQSQueue
+              - Arn
+  lambda3:
+    handler: handler.lambda3
+    events:
+      - s3:
+          bucket: ${self:provider.environment.BUCKET_NAME}
+          event: s3:ObjectCreated:*
+
+resources:
+  Resources:
+    SQSQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${self:provider.environment.SQS_QUEUE_NAME}
+
+plugins:
+  - serverless-plugin-resource-tagging
+  - serverless-s3-cleaner
+  ## Optional - if you plan to add more functionality to this Lambda functions in the future that requires
+  ## external Python libraries, you might find the Serverless Python Requirements plugin useful.
+  # - serverless-python-requirements
+
+custom:
+  # pythonRequirements:
+  #   dockerizePip: non-linux
+  serverless-s3-cleaner:
+    prompt: true
+    buckets:
+      - ${self:provider.environment.BUCKET_NAME}

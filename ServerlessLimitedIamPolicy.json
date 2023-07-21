@@ -1,0 +1,186 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "cloudformation:Get*",
+        "cloudformation:List*",
+        "cloudformation:ValidateTemplate"
+      ],
+      "Resource": ["*"]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "cloudformation:CreateChangeSet",
+        "cloudformation:CreateStack",
+        "cloudformation:CreateUploadBucket",
+        "cloudformation:DeleteChangeSet",
+        "cloudformation:DeleteStack",
+        "cloudformation:Describe*",
+        "cloudformation:ExecuteChangeSet",
+        "cloudformation:UpdateStack"
+      ],
+      "Resource": [
+        "arn:aws:cloudformation:*:*:stack/awsdevops-serverless-fundamentals*/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["lambda:CreateFunction", "lambda:Get*", "lambda:List*"],
+      "Resource": ["*"]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:CreateBucket",
+        "s3:DeleteBucket",
+        "s3:DeleteBucketPolicy",
+        "s3:GetBucketLocation",
+        "s3:GetBucketPolicy",
+        "s3:GetEncryptionConfiguration",
+        "s3:ListBucket",
+        "s3:ListBucketVersions",
+        "s3:PutAccelerateConfiguration",
+        "s3:PutBucketNotification",
+        "s3:PutBucketPolicy",
+        "s3:PutBucketTagging",
+        "s3:PutEncryptionConfiguration"
+      ],
+      "Resource": [
+        "arn:aws:s3:::awsdevops-serverless-fundamentals*serverlessdeploy*",
+        "arn:aws:s3:::awsdevops-serverless-fundamentals*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:DeleteObject",
+        "s3:DeleteObjectVersion",
+        "s3:GetObject",
+        "s3:PutObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::awsdevops-serverless-fundamentals*serverlessdeploy*/*",
+        "arn:aws:s3:::awsdevops-serverless-fundamentals*/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "lambda:AddPermission",
+        "lambda:CreateAlias",
+        "lambda:DeleteFunction",
+        "lambda:InvokeFunction",
+        "lambda:PublishVersion",
+        "lambda:RemovePermission",
+        "lambda:TagResource",
+        "lambda:Update*"
+      ],
+      "Resource": [
+        "arn:aws:lambda:*:*:function:awsdevops-serverless-fundamentals-*-*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["cloudwatch:GetMetricStatistics"],
+      "Resource": ["*"]
+    },
+    {
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:DeleteLogGroup",
+        "logs:TagResource"
+      ],
+      "Resource": ["arn:aws:logs:*:*:*"],
+      "Effect": "Allow"
+    },
+    {
+      "Action": ["logs:PutLogEvents"],
+      "Resource": ["arn:aws:logs:*:*:*"],
+      "Effect": "Allow"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:DescribeLogGroups",
+        "logs:DescribeLogStreams",
+        "logs:FilterLogEvents"
+      ],
+      "Resource": ["*"]
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["events:Delete*", "events:Put*", "events:Remove*"],
+      "Resource": [
+        "arn:aws:events:*:*:rule/awsdevops-serverless-fundamentals-*-*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["events:DescribeRule"],
+      "Resource": [
+        "arn:aws:events:*:*:rule/awsdevops-serverless-fundamentals-*-*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["iam:PassRole"],
+      "Resource": ["arn:aws:iam::*:role/*"]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iam:CreateRole",
+        "iam:DeleteRole",
+        "iam:DeleteRolePolicy",
+        "iam:Get*",
+        "iam:PutRolePolicy",
+        "iam:TagRole"
+      ],
+      "Resource": [
+        "arn:aws:iam::*:role/awsdevops-serverless-fundamentals-*-*-lambdaRole"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "apigateway:DELETE",
+        "apigateway:GET",
+        "apigateway:PATCH",
+        "apigateway:POST",
+        "apigateway:PUT"
+      ],
+      "Resource": [
+        "arn:aws:apigateway:*::/apikeys*",
+        "arn:aws:apigateway:*::/apis*",
+        "arn:aws:apigateway:*::/restapis*",
+        "arn:aws:apigateway:*::/usageplans*",
+        "arn:aws:apigateway:*::/tags*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": "sqs:*",
+      "Resource": ["arn:aws:sqs:*:*:awsdevops-serverless-fundamentals"]
+    },
+    {
+      "Effect": "Allow",
+      "Action": "logs:PutSubscriptionFilter",
+      "Resource": [
+        "arn:aws:logs:*:*:log-group:/aws/api-gateway/*",
+        "arn:aws:logs:*:*:log-group:/aws/lambda/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "lambda:CreateEventSourceMapping",
+        "lambda:DeleteEventSourceMapping"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
