@@ -12,22 +12,7 @@ The application consists of three AWS Lambda functions:
 2. `lambda2` is triggered by the SQS queue. It logs the SQS event and puts the event into an object in the S3 bucket.
 3. `lambda3` is triggered by S3 events. It logs the bucket and key of the created object.
 
-```sequence {theme="hand"}
-participant Client
-participant API Gateway
-participant Lambda1
-participant SQS
-participant Lambda2
-participant S3
-participant Lambda3
-Client->API Gateway: HTTP POST
-API Gateway->Lambda1: Trigger
-Lambda1->SQS: Put message
-SQS->Lambda2: Trigger
-Lambda2->S3: Put object
-S3->Lambda3: Trigger
-Lambda3-->Client: Response
-```
+![Diagram](diagram.png)
 
 ## Prerequisites
 
